@@ -107,6 +107,15 @@ h1, h2, h3, h4 {
   margin: 0 auto;
   padding: 0.9rem 1.5rem;
   display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Title + language switch always share a row; nav always gets its own row
+   below, regardless of how long the section labels are in either language —
+   keeps the header's shape identical between /en/ and /fr/. */
+.header-top {
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;

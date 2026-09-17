@@ -1,4 +1,4 @@
-# The Chronicle / La Chronique
+# The World of Atelesia / Le Monde d'Atelesia
 
 A bilingual (English/French) lore wiki, styled like an old parchment manuscript. Plain HTML/CSS/JS — no build step, no framework, no dependencies. Deploys straight to GitHub Pages at `github.io/Lore/`.
 
