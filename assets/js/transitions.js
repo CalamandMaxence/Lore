@@ -7,16 +7,16 @@
 // Firefox/Safari). Everywhere else this script simply does nothing and
 // navigation behaves normally — it's a progressive enhancement layer.
 (() => {
-  // A page's "category" is the first folder under /pages/, e.g.
-  // /pages/characters/elaris.html -> "characters". The home page and any
-  // top-level page count as "home".
-  function categoryOf(url) {
+  // URLs look like /<lang>/<section>/<subsection>/<file>.html (or
+  // /<lang>/library/<file>.html, which has no subsection level). We only
+  // need the language and the section to decide which animation to play.
+  function localeOf(url) {
     try {
       const path = new URL(url, location.href).pathname;
-      const match = path.match(/\/pages\/([^/]+)\//);
-      return match ? match[1] : "home";
+      const match = path.match(/\/(en|fr)\/([^/]+)\//);
+      return match ? { lang: match[1], section: match[2] } : null;
     } catch {
-      return "home";
+      return null;
     }
   }
 
@@ -27,12 +27,18 @@
     const destinationUrl = activation.entry?.url;
     if (!destinationUrl) return;
 
-    const fromCategory = categoryOf(location.href);
-    const toCategory = categoryOf(destinationUrl);
+    const from = localeOf(location.href);
+    const to = localeOf(destinationUrl);
 
-    viewTransition.types.add(
-      fromCategory === toCategory ? "same-category" : "cross-category"
-    );
+    if (from && to) {
+      if (from.lang !== to.lang) {
+        viewTransition.types.add("language-switch");
+      } else {
+        viewTransition.types.add(
+          from.section === to.section ? "same-category" : "cross-category"
+        );
+      }
+    }
 
     if (activation.navigationType === "traverse" && activation.entry.index != null) {
       const goingBack = activation.entry.index < navigation.currentEntry.index;

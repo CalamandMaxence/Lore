@@ -149,6 +149,23 @@ h1, h2, h3, h4 {
   border-bottom-color: var(--gold-light);
 }
 
+.lang-switch {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--parchment-light) !important;
+  border: 1px solid var(--gold);
+  padding: 0.3rem 0.65rem;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.lang-switch:hover {
+  background: var(--gold);
+  color: var(--ink) !important;
+}
+
 /* -------------------------------------------------------------------------
    Layout / the "sheet"
    ------------------------------------------------------------------------- */
@@ -189,6 +206,43 @@ main {
 .sheet::after { top: 0.35rem; right: 0.5rem; }
 .sheet .corner-bl { bottom: 0.35rem; left: 0.5rem; }
 .sheet .corner-br { bottom: 0.35rem; right: 0.5rem; }
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  margin: 0 0 1rem;
+}
+
+.breadcrumb a {
+  color: var(--ink-faint) !important;
+  text-decoration: none !important;
+}
+
+.breadcrumb a:hover {
+  color: var(--accent) !important;
+  text-decoration: underline !important;
+}
+
+.breadcrumb .sep {
+  margin: 0 0.4rem;
+  color: var(--gold);
+}
+
+.empty-state {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-faint);
+  border: 1px dashed var(--border);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.empty-state code {
+  font-style: normal;
+  background: rgba(138, 106, 36, 0.12);
+  padding: 0.1rem 0.35rem;
+}
 
 .eyebrow {
   font-family: var(--font-display);

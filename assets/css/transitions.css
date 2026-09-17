@@ -10,8 +10,9 @@
 
    assets/js/transitions.js inspects where you're navigating *from* and *to*
    (using the pageswap event) and tags the transition with a "type":
-     - "same-category"  → e.g. Characters -> Characters : a quick page SLIDE
-     - "cross-category"  → e.g. Characters -> Locations  : a bigger PAGE TURN
+     - "same-category"   → same section, e.g. Sciences -> Sciences : a quick SLIDE
+     - "cross-category"  → different section, e.g. Sciences -> Geography : a PAGE TURN
+     - "language-switch" → /en/ <-> /fr/                        : an INK DISSOLVE
    The CSS below reacts to those types with :active-view-transition-type().
 
    The header keeps its own view-transition-name ("site-header", set in
@@ -61,6 +62,16 @@
 
 :root:active-view-transition-type(cross-category)::view-transition-new(page-content) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both page-turn-in;
+}
+
+/* ---- Language switch: a soft ink-dissolve, distinct from both above ---- */
+
+:root:active-view-transition-type(language-switch)::view-transition-old(page-content) {
+  animation: 0.45s ease-in both ink-dissolve-out;
+}
+
+:root:active-view-transition-type(language-switch)::view-transition-new(page-content) {
+  animation: 0.45s ease-out both ink-dissolve-in;
 }
 
 /* ---- Traversing back (browser back button) reverses the slide ---- */
@@ -119,6 +130,32 @@
     opacity: 0;
     transform: perspective(1400px) rotateY(-18deg) translateX(-3%);
     filter: brightness(0.65);
+  }
+}
+
+@keyframes ink-dissolve-out {
+  0% {
+    opacity: 1;
+    filter: blur(0) saturate(1);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(6px) saturate(0.4);
+    transform: scale(1.015);
+  }
+}
+
+@keyframes ink-dissolve-in {
+  0% {
+    opacity: 0;
+    filter: blur(6px) saturate(0.4);
+    transform: scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0) saturate(1);
+    transform: scale(1);
   }
 }
 

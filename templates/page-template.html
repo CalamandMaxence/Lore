@@ -1,50 +1,72 @@
 <!--
-  PAGE TEMPLATE — copy this file into pages/<category>/<your-entry>.html
-  and fill in the bracketed placeholders. Paths below assume you're placing
-  it two levels deep, e.g. pages/characters/your-entry.html — if you add a
-  new category folder, keep the same depth and these paths still work.
+  PAGE TEMPLATE (English) — copy this file anywhere in the /en/ tree, at
+  any depth, and fill in the bracketed placeholders. Because every link
+  below is rooted at /Lore/ (not relative), this template works unchanged
+  no matter how deeply nested the folder is — no "../" counting needed.
+
+  Just edit:
+    - the breadcrumb chain (one <a> per ancestor category)
+    - the nav's aria-current="page" (put it on whichever top-level
+      section this page lives under)
+    - the lang-switch href once the French version of this entry exists
 -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Entry Title] — The Chronicle</title>
+  <title>[Entry Title] — [Subsection] — The Chronicle</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../../assets/css/style.css" />
-  <link rel="stylesheet" href="../../assets/css/transitions.css" />
+  <link rel="stylesheet" href="/Lore/assets/css/style.css" />
+  <link rel="stylesheet" href="/Lore/assets/css/transitions.css" />
 </head>
 <body>
 
   <!--
-    Header: identical on every page. Mark the current section's nav link
-    with aria-current="page" (drop it from the others). Add a nav link
-    here — and on every other page's header — if you create a new category.
+    Header: identical on every English page. Put aria-current="page" on
+    whichever top-level section link this page belongs to.
   -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="site-title" href="../../index.html">&#10022; The Chronicle &#10022;</a>
+      <a class="site-title" href="/Lore/en/index.html">&#10022; The Chronicle &#10022;</a>
       <nav class="site-nav">
-        <a href="../../index.html">Home</a>
-        <a href="../characters/index.html">Characters</a>
-        <a href="../locations/index.html">Locations</a>
-        <a href="../events/index.html">Events</a>
+        <a href="/Lore/en/index.html">Home</a>
+        <a href="/Lore/en/spirituality/index.html">Spirituality</a>
+        <a href="/Lore/en/sciences/index.html">Sciences</a>
+        <a href="/Lore/en/geopolitics-and-history/index.html">Geopolitics and History</a>
+        <a href="/Lore/en/geography/index.html">Geography</a>
+        <a href="/Lore/en/library/index.html">Library</a>
       </nav>
+      <a class="lang-switch" href="[/Lore/fr/.../equivalent-page.html]">Français</a>
     </div>
   </header>
 
   <main>
-    <!-- .sheet is the parchment "page" surface. The four corner spans draw the ornamental corner marks — keep them empty, CSS fills them in. -->
+    <!-- .sheet is the parchment "page" surface; the four corner spans draw the ornamental corner marks — keep them empty. -->
     <article class="sheet">
       <span class="corner-tl"></span><span class="corner-tr"></span>
       <span class="corner-bl"></span><span class="corner-br"></span>
 
-      <!-- .eyebrow: small label above the title, usually the category name -->
-      <p class="eyebrow">[Category]</p>
+      <!--
+        Breadcrumb: Home > every ancestor category, in order > current page
+        (no link on the last one). Add or remove <a> pairs to match however
+        deep this page actually is nested — that's the only thing in this
+        template that depends on depth, and it's just a list, not path math.
+      -->
+      <nav class="breadcrumb">
+        <a href="/Lore/en/index.html">Home</a> <span class="sep">&rsaquo;</span>
+        <a href="/Lore/en/[section]/index.html">[Section]</a> <span class="sep">&rsaquo;</span>
+        <a href="/Lore/en/[section]/[subsection]/index.html">[Subsection]</a> <span class="sep">&rsaquo;</span>
+        <!-- add more "<a>...</a> <span class="sep">&rsaquo;</span>" pairs here for deeper nesting -->
+        <span>[Entry Title]</span>
+      </nav>
+
+      <!-- .eyebrow: small label above the title, usually the immediate parent category -->
+      <p class="eyebrow">[Section] &rsaquo; [Subsection]</p>
 
       <!-- .tag: optional small pill badge, e.g. a status or type label. Delete if not needed. -->
       <span class="tag">[Optional Tag]</span>
@@ -80,11 +102,12 @@
 
       <!--
         Picture, option A — a real image. Drop the file into assets/img/
-        and point src at it. alt text is required for accessibility.
+        and point src at it (also site-rooted). alt text is required for
+        accessibility.
       -->
       <!--
       <figure class="lore-figure">
-        <img src="../../assets/img/[your-file].jpg" alt="[Describe the image]" />
+        <img src="/Lore/assets/img/[your-file].jpg" alt="[Describe the image]" />
         <figcaption>[Caption text.]</figcaption>
       </figure>
       -->
@@ -110,15 +133,15 @@
       <hr class="ornament" />
 
       <!--
-        .see-also: the wiki cross-linking block. Just normal relative
-        <a href> links to other pages — no special wiki syntax. This is
-        also how you should link to this entry from other pages that
+        .see-also: the wiki cross-linking block. Just normal /Lore/-rooted
+        <a href> links to other pages — no special wiki syntax needed. This
+        is also how you should link to this entry from other pages that
         mention it, inline or here.
       -->
       <div class="see-also">
         <h3>Elsewhere in the Chronicle</h3>
         <ul>
-          <li><a href="[relative/path/to/related-entry.html]">[Related Entry Title]</a></li>
+          <li><a href="/Lore/en/[path/to/related-entry].html">[Related Entry Title]</a></li>
         </ul>
       </div>
     </article>
@@ -128,7 +151,7 @@
     <p>The Chronicle &middot; handwritten lore, rendered on parchment</p>
   </footer>
 
-  <script src="../../assets/js/transitions.js"></script>
-  <script src="../../assets/js/reveal.js"></script>
+  <script src="/Lore/assets/js/transitions.js"></script>
+  <script src="/Lore/assets/js/reveal.js"></script>
 </body>
 </html>

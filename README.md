@@ -1,101 +1,126 @@
-# The Chronicle
+# The Chronicle / La Chronique
 
-An accessible lore wiki, styled like an old parchment manuscript. Plain HTML/CSS/JS — no build step, no framework, no dependencies. Deploys straight to GitHub Pages.
+A bilingual (English/French) lore wiki, styled like an old parchment manuscript. Plain HTML/CSS/JS — no build step, no framework, no dependencies. Deploys straight to GitHub Pages at `github.io/Lore/`.
 
-## Structure
+## How the site is organized
 
 ```
-index.html                     Home page / summary
-pages/
-  characters/
-    index.html                 Category listing
-    example-entry.html         Lorem Ipsum demo entry
-  locations/
-    index.html
-    example-entry.html
-  events/
-    index.html
-    example-entry.html
+index.html          Language chooser (root)
+en/                  English tree
+  index.html         English home
+  spirituality/
+    index.html       Section index (lists its subsections)
+    deities/
+      index.html     Subsection index (lists entries, or subsections of its own)
+      your-entry.html
+    ...
+  sciences/
+  geopolitics-and-history/
+  geography/
+  library/           Flat section, no subsections — entries live directly inside
+fr/                  French tree — same shape, French slugs (see below)
+  index.html
+  spiritualite/
+    dieux/
+    ...
 templates/
-  page-template.html           Copy this to start a new entry
+  page-template.html       Copy this for a new English entry
+  modele-de-page.html      Copy this for a new French entry
 assets/
-  css/
-    style.css                  Theme: typography, parchment texture, components
-    transitions.css            Page-to-page animations
-  js/
-    transitions.js             Picks which animation plays, based on navigation
-    reveal.js                  Scroll-in fade animation for elements
-  img/                         Drop your artwork here
+  css/style.css            Theme: typography, parchment texture, components
+  css/transitions.css      Page-to-page animations
+  js/transitions.js        Picks which animation plays, based on navigation
+  js/reveal.js             Scroll-in fade animation for elements
+  img/                     Drop your artwork here
 ```
 
-Every category (`characters`, `locations`, `events`) is a folder under `pages/`. Add a new category by copying a folder like `pages/locations/` and updating its `index.html` links, then adding a nav link for it in `.site-nav` on every page's header (see "Adding a new category" below).
+**Categories nest to any depth.** A "subsection" isn't a fixed level — `en/spirituality/deities/` can itself contain further category folders (e.g. `en/spirituality/deities/pantheon-a/`, further split by religion) before you finally add entry pages. Every category folder is just an `index.html` that either lists its child categories or, once it has no more children, lists entries. Nest as deep as your lore actually needs.
+
+## Important: every internal link is rooted at `/Lore/`
+
+Every `href`/`src` in this site starts with `/Lore/` (e.g. `/Lore/assets/css/style.css`, `/Lore/en/sciences/magic/index.html`) instead of a relative path. This means:
+
+- **You never count `../`.** Copy `templates/page-template.html` into a folder 6 levels deep and every link on it still works, unedited (aside from the breadcrumb, which you fill in to match — see below).
+- **This only works because the repo is named `Lore`**, published as a GitHub Pages *project* site at `<username>.github.io/Lore/`. If you ever rename the repository, every internal link breaks at once — fix it with:
+  ```bash
+  grep -rl '"/Lore/' --include="*.html" . | xargs sed -i 's#/Lore/#/NewName/#g'
+  ```
+  (and update `BASE` in the generator script if you keep it, and the templates' comments).
+- If you later move to a custom domain (so the site is served at the domain root instead of a `/Lore/` subpath), the same find-and-replace removes the prefix entirely (`s#/Lore/#/#g`).
 
 ## Previewing locally
 
-Because the pages link to each other with relative paths and use real browser navigation (not JavaScript routing), you can preview by just opening `index.html` in a browser — but for the page transitions to behave correctly, run it through a local server instead of `file://`:
+Because paths are rooted at `/Lore/`, serve from the **parent** of this folder so that prefix resolves correctly:
 
 ```bash
-cd /home/max/Documents/Lore
+cd /home/max/Documents   # the parent of Lore/
 python3 -m http.server 8000
-# then open http://localhost:8000
+# then open http://localhost:8000/Lore/
 ```
 
 ## Adding a new lore entry
 
-1. Copy `templates/page-template.html` into the right category folder, e.g. `pages/characters/new-character.html`.
-2. Fill in the bracketed placeholders. The template's HTML comments explain what each block is (title, tag, body text, quote, image, note, "see also" links).
-3. Link to it from that category's `index.html` (add an `.entry-card` entry) and, if it's worth surfacing, from the home page's "Recently Added" grid.
-4. Link *to* it from any other page that mentions it, using a normal relative `<a href="...">` — that's the whole wiki-linking mechanism here, no special syntax needed. Use `.see-also` at the bottom of a page to list related entries explicitly.
+1. Copy `templates/page-template.html` (English) or `templates/modele-de-page.html` (French) into the right category folder, at whatever depth it belongs — e.g. `en/spirituality/deities/some-god.html`.
+2. Fill in the bracketed placeholders. The template's comments explain each block. The only depth-sensitive part is the **breadcrumb**: add one `<a>` per ancestor category, in order.
+3. Link to it from its category's `index.html` (add an `.entry-card`) — or, if the category currently shows the "no entries yet" empty state, replace that block with an `.entry-grid` containing your new card.
+4. Link *to* it from any other page that mentions it, using a normal `/Lore/`-rooted `<a href="...">`. That's the whole wiki-linking mechanism — no special syntax. Use `.see-also` at the bottom of a page for an explicit "related pages" list.
+5. Once the matching page exists in the other language, update both pages' `.lang-switch` link to point at each other.
+
+### Adding a new subcategory (at any depth)
+
+1. Create the folder and an `index.html` inside it, copied from a sibling category's index page.
+2. Add a `<li><a>` entry for it in the parent category's `.category-list`.
+3. Update the breadcrumb and `.eyebrow` on the new index page to include the new ancestor.
+4. If it's a brand-new **top-level section** (not just a subsection), also add its nav link to `.site-nav` in **every** page's header (both languages) — `assets/js/transitions.js` picks up new top-level sections automatically for the transition system, no JS changes needed.
 
 ### Reusable content blocks (defined in `assets/css/style.css`)
 
 | Class | Use for |
 |---|---|
+| `.breadcrumb` | The Home › Section › ... trail at the top of a page |
 | `.lore-text` (wrapping `<p>`) | Body paragraphs — first paragraph automatically gets a decorative drop cap |
 | `blockquote.lore-quote` | An in-world quotation, optionally with a `<cite>` for attribution |
 | `figure.lore-figure` + `<img>` + `<figcaption>` | A real picture with a caption |
 | `.image-placeholder` | A styled stand-in box for artwork you haven't made yet |
 | `.note-box` + `.note-label` | A marginal aside, e.g. "Scribe's Note" |
+| `.empty-state` | The "nothing here yet" message on a category with no entries |
 | `hr.ornament` | A decorative section divider |
 | `.tag` | A small category pill badge |
 | `.see-also` | The "related pages" block at the end of an entry |
-| `.entry-grid` / `.entry-card` | A grid of links, for category/listing pages |
+| `.category-list` | A grid of links to subcategories, for a category index page |
+| `.entry-grid` / `.entry-card` | A grid of links to entries, for a leaf category page |
+| `.lang-switch` | The EN/FR pill in the header |
 | `.reveal` | Add to any block element for a fade-up-on-scroll entrance (used sparingly) |
 
 ### Adding images
 
-Drop image files into `assets/img/`, then reference them with a path like `../../assets/img/your-file.jpg` from a page in `pages/<category>/`. Replace a `.image-placeholder` block with:
+Drop image files into `assets/img/`, then reference them with `/Lore/assets/img/your-file.jpg` from anywhere on the site. Replace an `.image-placeholder` block with:
 
 ```html
 <figure class="lore-figure">
-  <img src="../../assets/img/your-file.jpg" alt="Describe the image" />
+  <img src="/Lore/assets/img/your-file.jpg" alt="Describe the image" />
   <figcaption>A short caption.</figcaption>
 </figure>
 ```
-
-### Adding a new category
-
-1. Create `pages/<new-category>/index.html`, copied from an existing category index.
-2. Add a nav link (`<a href="pages/<new-category>/index.html">...</a>`) to `.site-nav` in **every** page's header, and add it to the "Browse by Category" list on the home page.
-3. `assets/js/transitions.js` detects categories automatically from the URL (`/pages/<category>/...`), so a new folder immediately gets correct same-category vs. cross-category transitions with no extra JS changes.
 
 ## How the page transitions work
 
 This site uses the browser-native [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) in its cross-document (multi-page) form — no animation library, no SPA routing. Two pieces work together:
 
-- **`assets/css/transitions.css`** opts every navigation in with `@view-transition { navigation: auto; }`, then defines different animations for a few "types" of transition: a quick horizontal slide between pages in the *same* category, and a bigger perspective "page turn" between *different* categories (fitting the parchment theme). It also gives the header its own persistent `view-transition-name` so it stays fixed in place instead of animating with the rest of the page.
-- **`assets/js/transitions.js`** listens for the `pageswap` event (fired just before you leave a page) and compares the category of the page you're on to the category of the page you're going to, tagging the transition as `same-category` or `cross-category` (and `back`/`forward` for browser history navigation) so the CSS above knows which animation to play.
+- **`assets/css/transitions.css`** opts every navigation in with `@view-transition { navigation: auto; }`, then defines three different animations depending on where you're navigating to:
+  - **same top-level section** (e.g. within Sciences) → a quick horizontal **slide**
+  - **different top-level section** (e.g. Sciences → Geography) → a bigger perspective **page turn**
+  - **switching language** (`/en/` ↔ `/fr/`) → a soft **ink-dissolve** (blur + fade)
 
-**Browser support**: cross-document View Transitions currently work in Chromium-based browsers (Chrome, Edge). In browsers that don't support it yet (Firefox, Safari, as of this writing), navigation just works normally with no animation — this is a progressive enhancement, not a requirement.
+  It also gives the header its own persistent `view-transition-name`, so it stays fixed in place while `<main>` animates.
+- **`assets/js/transitions.js`** listens for the `pageswap` event and compares the language and top-level section of the page you're leaving vs. the one you're entering, tagging the transition with the right type for the CSS above.
 
-If you want to go further with this (it's a good rabbit hole for learning modern CSS/JS): try giving individual elements — like a character portrait that appears on both the category listing and the entry page — their own `view-transition-name` so they visually morph between positions across the navigation, instead of only animating the whole page.
+**Browser support**: cross-document View Transitions currently work in Chromium-based browsers (Chrome, Edge). Elsewhere navigation just works normally with no animation — pure progressive enhancement.
 
 ## Deploying to GitHub Pages
 
-1. Push this repository to GitHub.
+1. Push this repository to GitHub (repo must stay named `Lore` for the `/Lore/`-rooted links to resolve — see above).
 2. In the repo, go to **Settings → Pages**.
 3. Under "Build and deployment", set **Source** to "Deploy from a branch".
 4. Set **Branch** to `main` and the folder to `/ (root)`, then save.
-5. Your site will publish at `https://<your-username>.github.io/<repo-name>/`.
-
-Because this is a project site (not a `<username>.github.io` root repo), all links in this project are relative — that's intentional and required for the site to work correctly under that `/repo-name/` subpath. Don't change internal links to start with `/`.
+5. Your site publishes at `https://<your-username>.github.io/Lore/`.
