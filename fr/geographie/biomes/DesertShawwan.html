@@ -1,0 +1,167 @@
+<!--
+  MODÈLE DE PAGE (Français) — copiez ce fichier n'importe où dans l'arbre
+  /fr/, à n'importe quelle profondeur, puis remplissez les champs entre
+  crochets. Comme chaque lien ci-dessous part de /Lore/ (et non d'un chemin
+  relatif), ce modèle fonctionne sans modification quel que soit le niveau
+  d'imbrication du dossier — pas besoin de compter des "../".
+
+  Il suffit d'éditer :
+    - le fil d'Ariane (breadcrumb) : un <a> par catégorie ancêtre
+    - aria-current="page" dans la nav, à placer sur la section de
+      premier niveau à laquelle cette page appartient
+    - le lien lang-switch, une fois la version anglaise créée
+-->
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Titre de l'entrée] — [Sous-section] — Le Monde d'Atelesia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/Lore/assets/css/style.css" />
+  <link rel="stylesheet" href="/Lore/assets/css/transitions.css" />
+</head>
+<body>
+
+  <!--
+    En-tête : identique sur chaque page française. Placez
+    aria-current="page" sur le lien de la section de premier niveau
+    correspondante.
+  -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-top">
+        <a class="site-title" href="/Lore/fr/index.html">&#10022; Le Monde d'Atelesia &#10022;</a>
+        <a class="lang-switch" href="/Lore/en/geography/biomes/ShawwanDesert.html">English</a>
+      </div>
+      <nav class="site-nav">
+        <a href="/Lore/fr/index.html">Accueil</a>
+        <a href="/Lore/fr/spiritualite/index.html">Spiritualité</a>
+        <a href="/Lore/fr/sciences/index.html">Sciences</a>
+        <a href="/Lore/fr/geopolitique-et-histoire/index.html">Géopolitique et Histoire</a>
+        <a href="/Lore/fr/geographie/index.html">Géographie</a>
+        <a href="/Lore/fr/bibliotheque/index.html">Bibliothèque</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- .sheet est la surface "page" en parchemin ; les quatre span de coin dessinent les ornements — laissez-les vides. -->
+    <article class="sheet">
+      <span class="corner-tl"></span><span class="corner-tr"></span>
+      <span class="corner-bl"></span><span class="corner-br"></span>
+
+      <!--
+        Fil d'Ariane : Accueil > chaque catégorie ancêtre, dans l'ordre >
+        page actuelle (sans lien sur la dernière). Ajoutez ou retirez des
+        paires <a> selon la profondeur réelle de cette page — c'est la
+        seule chose ici qui dépend de la profondeur, et ce n'est qu'une
+        liste, pas un calcul de chemin.
+      -->
+      <nav class="breadcrumb">
+        <a href="/Lore/fr/index.html">Accueil</a> <span class="sep">&rsaquo;</span>
+        <a href="/Lore/fr/geographie/index.html">Geographie</a> <span class="sep">&rsaquo;</span>
+        <a href="/Lore/fr/geographie/biomes/index.html">Biomes</a> <span class="sep">&rsaquo;</span>
+        <!-- ajoutez d'autres paires "<a>...</a> <span class="sep">&rsaquo;</span>" pour une imbrication plus profonde -->
+        <span>Désert Shawwan</span>
+      </nav>
+
+      <!-- .eyebrow : petit label au-dessus du titre, en général la catégorie parente directe -->
+      <p class="eyebrow">Géographie &rsaquo; Biomes</p>
+
+      <!-- .tag : badge optionnel, ex. un statut ou un type. Supprimez si inutile. -->
+      <span class="tag">[Étiquette optionnelle]</span>
+
+      <h1 class="page-title">Désert Shawwan</h1>
+
+      <!--
+        .lore-text : enveloppez vos paragraphes dans cette div. Le premier
+        <p> reçoit automatiquement une lettrine décorative — aucun balisage
+        supplémentaire nécessaire.
+      -->
+      <div class="lore-text">
+        <p>
+          Les sables brûlants du désert Shawwan s'étendent sur les terres septentrionales d'Osteros. 
+          Ses dunes balayées par les vents chauds du soleil abritent une myriade de ruines, vestiges des civilisations qui n'étaient pas préparées à affronter ses épreuves. 
+          Tous ceux qui s'aventurent dans le désert doivent se méfier du calme, surtout près du gigantesque fleuve Oaku, véritable paradis pour les assoiffés, ce qui en fait un terrain de chasse parfait pour la faune locale.
+        </p>
+        <p>
+          [Deuxième paragraphe.]
+        </p>
+        <p>
+          [Troisième paragraphe, etc. — ajoutez autant de balises &lt;p&gt;
+          que nécessaire.]
+        </p>
+      </div>
+
+      <!--
+        blockquote.lore-quote : une citation issue de l'univers. Le <cite>
+        à l'intérieur est optionnel, pour l'attribution. Supprimez le bloc
+        entier si inutile.
+      -->
+      <blockquote class="lore-quote">
+        [Citation.]
+        <cite>&mdash; [Qui l'a dit, ou d'où ça vient]</cite>
+      </blockquote>
+
+      <!--
+        Image, option A — une vraie illustration. Déposez le fichier dans
+        assets/img/ et pointez src dessus (également site-rooted). Le texte
+        alt est requis pour l'accessibilité.
+      -->
+      <!--
+      <figure class="lore-figure">
+        <img src="/Lore/assets/img/[votre-fichier].jpg" alt="[Décrivez l'image]" />
+        <figcaption>[Texte de légende.]</figcaption>
+      </figure>
+      -->
+
+      <!--
+        Image, option B — pas encore d'illustration. Utilisez cet espace
+        réservé stylisé plutôt qu'une balise <img> cassée. Supprimez une
+        fois l'image réelle en place.
+      -->
+      <figure class="lore-figure image-placeholder">
+        [Espace réservé à une illustration — décrivez ce que l'image montrerait]
+      </figure>
+
+      <!--
+        .note-box : une remarque en marge, ex. un commentaire de scribe,
+        un avertissement de contenu, ou une note hors-univers. Supprimez
+        si inutile.
+      -->
+      <div class="note-box">
+        <span class="note-label">[Étiquette de la note, ex. "Note du scribe"]</span>
+        [Texte de la note.]
+      </div>
+
+      <!-- hr.ornament : séparateur décoratif de section. Utilisez librement entre les sections. -->
+      <hr class="ornament" />
+
+      <!--
+        .see-also : le bloc de liens wiki. De simples liens <a href>
+        pointant vers /Lore/ — pas de syntaxe wiki spéciale. C'est aussi
+        comme ça que vous devez lier vers cette entrée depuis d'autres
+        pages qui la mentionnent, en ligne ou ici.
+      -->
+      <div class="see-also">
+        <h3>Ailleurs dans la Chronique</h3>
+        <ul>
+          <li><a href="/Lore/fr/[chemin/vers/entree-liee].html">[Titre de l'entrée liée]</a></li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Le Monde d'Atelesia &middot; légendes écrites à la main, sur parchemin</p>
+  </footer>
+
+  <script src="/Lore/assets/js/transitions.js"></script>
+  <script src="/Lore/assets/js/reveal.js"></script>
+</body>
+</html>
