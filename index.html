@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Chronicle — Home</title>
+  <meta name="description" content="An accessible lore wiki, written on parchment." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/transitions.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-title" href="index.html">&#10022; The Chronicle &#10022;</a>
+      <nav class="site-nav">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="pages/characters/index.html">Characters</a>
+        <a href="pages/locations/index.html">Locations</a>
+        <a href="pages/events/index.html">Events</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="sheet">
+      <span class="corner-tl"></span><span class="corner-tr"></span>
+      <span class="corner-bl"></span><span class="corner-br"></span>
+
+      <p class="eyebrow">A Lore Wiki</p>
+      <h1 class="page-title">The Chronicle</h1>
+
+      <div class="lore-text">
+        <p>
+          Welcome, traveler. Within these pages is gathered everything known
+          of the world — its people, its places, and the events that shaped
+          them. Replace this paragraph with your own opening: what your world
+          is called, what tone it carries, and why someone would want to
+          wander through it.
+        </p>
+        <p>
+          Use the banner above to browse by category, or start with one of
+          the entries below. Every page links onward to the people and
+          places it mentions, so you can follow the thread wherever it leads.
+        </p>
+      </div>
+
+      <hr class="ornament" />
+
+      <h2>Browse by Category</h2>
+      <ul class="category-list">
+        <li><a href="pages/characters/index.html">Characters</a></li>
+        <li><a href="pages/locations/index.html">Locations</a></li>
+        <li><a href="pages/events/index.html">Events</a></li>
+      </ul>
+
+      <hr class="ornament" />
+
+      <h2>Example Entries</h2>
+      <p>
+        Each category below has one example entry with Lorem Ipsum
+        placeholder text, showing off every content block the theme
+        supports. Replace these with your own lore — see
+        <code>templates/page-template.html</code> for a blank copy to start
+        from.
+      </p>
+      <div class="entry-grid">
+        <a class="entry-card reveal" href="pages/characters/example-entry.html">
+          <h3>Example Character</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </a>
+        <a class="entry-card reveal" href="pages/locations/example-entry.html">
+          <h3>Example Location</h3>
+          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+        </a>
+        <a class="entry-card reveal" href="pages/events/example-entry.html">
+          <h3>Example Event</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Chronicle &middot; handwritten lore, rendered on parchment</p>
+  </footer>
+
+  <script src="assets/js/transitions.js"></script>
+  <script src="assets/js/reveal.js"></script>
+</body>
+</html>

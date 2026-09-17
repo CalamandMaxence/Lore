@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Cross-document View Transitions
+   ==========================================================================
+
+   This opts every navigation within the site into the browser-native
+   View Transitions API (MPA / cross-document version). Supporting browsers
+   (Chromium-based, at the time of writing) will animate between the old and
+   new page instead of a hard cut. Non-supporting browsers just navigate
+   normally — this is a pure progressive enhancement, nothing breaks.
+
+   assets/js/transitions.js inspects where you're navigating *from* and *to*
+   (using the pageswap event) and tags the transition with a "type":
+     - "same-category"  → e.g. Characters -> Characters : a quick page SLIDE
+     - "cross-category"  → e.g. Characters -> Locations  : a bigger PAGE TURN
+   The CSS below reacts to those types with :active-view-transition-type().
+
+   The header keeps its own view-transition-name ("site-header", set in
+   style.css) so it stays put and doesn't get swept into the animation —
+   only the <main> content (view-transition-name: page-content) moves.
+   ========================================================================== */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header: cross-fade only, never flips/slides */
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation-duration: 0.25s;
+}
+
+/* ---- Default fallback (type not detected, e.g. very first navigation) ---- */
+
+::view-transition-old(page-content) {
+  animation: 0.4s ease-in both fade-out;
+}
+
+::view-transition-new(page-content) {
+  animation: 0.4s ease-out both fade-in;
+}
+
+/* ---- Same-category: a quick horizontal slide, like flipping one page ---- */
+
+:root:active-view-transition-type(same-category)::view-transition-old(page-content) {
+  animation: 0.32s ease-in both slide-out-left;
+}
+
+:root:active-view-transition-type(same-category)::view-transition-new(page-content) {
+  animation: 0.32s ease-out both slide-in-right;
+}
+
+/* ---- Cross-category: a bigger "turning to a new chapter" page-turn ---- */
+
+:root:active-view-transition-type(cross-category)::view-transition-old(page-content) {
+  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both page-turn-out;
+}
+
+:root:active-view-transition-type(cross-category)::view-transition-new(page-content) {
+  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both page-turn-in;
+}
+
+/* ---- Traversing back (browser back button) reverses the slide ---- */
+
+:root:active-view-transition-type(back)::view-transition-old(page-content) {
+  animation: 0.32s ease-in both slide-out-right;
+}
+
+:root:active-view-transition-type(back)::view-transition-new(page-content) {
+  animation: 0.32s ease-out both slide-in-left;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes slide-out-left {
+  to {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes slide-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes page-turn-out {
+  0% {
+    opacity: 1;
+    transform: perspective(1400px) rotateY(0deg);
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1400px) rotateY(-18deg) translateX(-3%);
+    filter: brightness(0.65);
+  }
+}
+
+@keyframes page-turn-in {
+  0% {
+    opacity: 0;
+    transform: perspective(1400px) rotateY(18deg) translateX(3%);
+    filter: brightness(0.65);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1400px) rotateY(0deg);
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

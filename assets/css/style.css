@@ -1,0 +1,502 @@
+/* ==========================================================================
+   The Chronicle — base theme
+   A parchment/old-manuscript look built entirely from CSS gradients + an
+   SVG noise filter, no image files required.
+   ========================================================================== */
+
+:root {
+  --parchment: #e8d9b0;
+  --parchment-light: #f1e6c6;
+  --parchment-dark: #cdb682;
+  --ink: #2b1d0e;
+  --ink-soft: #4a3620;
+  --ink-faint: #7a6541;
+  --accent: #7a1f1f;       /* oxblood red, for seals/accents */
+  --accent-light: #9c3232;
+  --gold: #8a6a24;         /* muted gold, for flourishes/borders */
+  --gold-light: #b6913f;
+  --border: #6b4a23;
+  --shadow: rgba(43, 29, 14, 0.35);
+
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-body: "EB Garamond", Garamond, Georgia, serif;
+
+  --content-width: 46rem;
+}
+
+/* -------------------------------------------------------------------------
+   Reset & base
+   ------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--parchment);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(255, 255, 255, 0.2), transparent 55%),
+    radial-gradient(ellipse at 85% 0%, rgba(107, 74, 35, 0.16), transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(107, 74, 35, 0.2), transparent 60%),
+    radial-gradient(ellipse at 0% 60%, rgba(107, 74, 35, 0.12), transparent 50%);
+  background-attachment: fixed;
+}
+
+/* subtle paper grain overlay, generated with an SVG turbulence filter */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--gold-light);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-soft);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+
+/* -------------------------------------------------------------------------
+   Header / site nav
+   ------------------------------------------------------------------------- */
+
+.site-header {
+  view-transition-name: site-header;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(180deg, #3a2a16, #2b1d0e);
+  border-bottom: 3px solid var(--gold);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.header-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.site-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--parchment-light) !important;
+  text-decoration: none !important;
+  letter-spacing: 0.04em;
+}
+
+.site-title:hover {
+  color: var(--gold-light) !important;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.site-nav a {
+  color: var(--parchment-dark) !important;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none !important;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--gold-light) !important;
+  border-bottom-color: var(--gold-light);
+}
+
+/* -------------------------------------------------------------------------
+   Layout / the "sheet"
+   ------------------------------------------------------------------------- */
+
+main {
+  view-transition-name: page-content;
+  display: block;
+  max-width: var(--content-width);
+  margin: 2.5rem auto 4rem;
+  padding: 0 1.25rem;
+}
+
+.sheet {
+  position: relative;
+  background: var(--parchment-light);
+  border: 1px solid var(--border);
+  outline: 1px solid rgba(138, 106, 36, 0.4);
+  outline-offset: -6px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 10px 30px var(--shadow), 0 2px 8px var(--shadow);
+}
+
+.sheet::before,
+.sheet::after,
+.sheet .corner-tl,
+.sheet .corner-tr,
+.sheet .corner-bl,
+.sheet .corner-br {
+  content: "\2766";
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+.sheet::before { top: 0.35rem; left: 0.5rem; }
+.sheet::after { top: 0.35rem; right: 0.5rem; }
+.sheet .corner-bl { bottom: 0.35rem; left: 0.5rem; }
+.sheet .corner-br { bottom: 0.35rem; right: 0.5rem; }
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin: 0 0 0.5rem;
+}
+
+.page-title {
+  font-size: 2.4rem;
+  margin: 0 0 0.75rem;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--accent);
+  color: var(--parchment-light);
+  padding: 0.2rem 0.65rem;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px var(--shadow);
+}
+
+/* -------------------------------------------------------------------------
+   Ornamental divider
+   ------------------------------------------------------------------------- */
+
+hr.ornament {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+  margin: 2rem 0;
+  position: relative;
+}
+
+hr.ornament::after {
+  content: "\2766";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--parchment-light);
+  padding: 0 0.6rem;
+  color: var(--gold);
+  font-size: 1rem;
+}
+
+/* -------------------------------------------------------------------------
+   Text blocks
+   ------------------------------------------------------------------------- */
+
+.lore-text > p {
+  margin: 0 0 1.1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.lore-text > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.6em;
+  float: left;
+  line-height: 0.78;
+  padding: 0.05em 0.09em 0 0;
+  color: var(--accent);
+}
+
+blockquote.lore-quote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 3px solid var(--gold);
+  font-style: italic;
+  color: var(--ink-soft);
+  position: relative;
+}
+
+blockquote.lore-quote::before {
+  content: "\201C";
+  font-family: Georgia, serif;
+  font-size: 2.6rem;
+  color: var(--gold-light);
+  position: absolute;
+  left: -0.15rem;
+  top: -0.6rem;
+  opacity: 0.6;
+}
+
+blockquote.lore-quote cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+.note-box {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: rgba(138, 106, 36, 0.08);
+  border: 1px dashed var(--gold);
+  font-size: 0.98rem;
+}
+
+.note-box .note-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+/* -------------------------------------------------------------------------
+   Images
+   ------------------------------------------------------------------------- */
+
+figure.lore-figure {
+  margin: 1.75rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+figure.lore-figure img {
+  width: 100%;
+  filter: sepia(0.15) contrast(1.02);
+}
+
+figure.lore-figure figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  padding-top: 0.5rem;
+}
+
+/* Use this in place of an <img> when you haven't dropped in artwork yet */
+.image-placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  background:
+    repeating-linear-gradient(135deg, rgba(107, 74, 35, 0.06) 0 10px, transparent 10px 20px),
+    var(--parchment-dark);
+  border: 1px dashed var(--border);
+  color: var(--ink-faint);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+/* -------------------------------------------------------------------------
+   "See also" / wiki links
+   ------------------------------------------------------------------------- */
+
+.see-also {
+  margin-top: 2.5rem;
+}
+
+.see-also h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.see-also ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.see-also a {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background: rgba(138, 106, 36, 0.1);
+  border: 1px solid var(--gold);
+  color: var(--ink-soft) !important;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+}
+
+.see-also a:hover {
+  background: var(--gold);
+  color: var(--parchment-light) !important;
+}
+
+/* -------------------------------------------------------------------------
+   Index / listing pages
+   ------------------------------------------------------------------------- */
+
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.entry-card {
+  display: block;
+  padding: 1.1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border);
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.entry-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px var(--shadow);
+}
+
+.entry-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.entry-card p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.category-list a {
+  display: block;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(138, 106, 36, 0.08));
+  border: 1px solid var(--gold);
+  color: var(--ink-soft) !important;
+  font-family: var(--font-display);
+  text-decoration: none !important;
+  letter-spacing: 0.03em;
+}
+
+.category-list a:hover {
+  background: var(--gold);
+  color: var(--parchment-light) !important;
+}
+
+/* -------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+/* -------------------------------------------------------------------------
+   Scroll-reveal animation (progressive enhancement, see reveal.js)
+   ------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .sheet {
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.9rem;
+  }
+
+  .lore-text > p:first-of-type::first-letter {
+    font-size: 2.8em;
+  }
+}

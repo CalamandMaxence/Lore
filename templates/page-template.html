@@ -1,0 +1,134 @@
+<!--
+  PAGE TEMPLATE — copy this file into pages/<category>/<your-entry>.html
+  and fill in the bracketed placeholders. Paths below assume you're placing
+  it two levels deep, e.g. pages/characters/your-entry.html — if you add a
+  new category folder, keep the same depth and these paths still work.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Entry Title] — The Chronicle</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/transitions.css" />
+</head>
+<body>
+
+  <!--
+    Header: identical on every page. Mark the current section's nav link
+    with aria-current="page" (drop it from the others). Add a nav link
+    here — and on every other page's header — if you create a new category.
+  -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-title" href="../../index.html">&#10022; The Chronicle &#10022;</a>
+      <nav class="site-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../characters/index.html">Characters</a>
+        <a href="../locations/index.html">Locations</a>
+        <a href="../events/index.html">Events</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- .sheet is the parchment "page" surface. The four corner spans draw the ornamental corner marks — keep them empty, CSS fills them in. -->
+    <article class="sheet">
+      <span class="corner-tl"></span><span class="corner-tr"></span>
+      <span class="corner-bl"></span><span class="corner-br"></span>
+
+      <!-- .eyebrow: small label above the title, usually the category name -->
+      <p class="eyebrow">[Category]</p>
+
+      <!-- .tag: optional small pill badge, e.g. a status or type label. Delete if not needed. -->
+      <span class="tag">[Optional Tag]</span>
+
+      <h1 class="page-title">[Entry Title]</h1>
+
+      <!--
+        .lore-text: wrap your body paragraphs in this div. The first <p>'s
+        first letter automatically gets a decorative drop cap — no extra
+        markup needed for that.
+      -->
+      <div class="lore-text">
+        <p>
+          [Write your opening paragraph here. This one gets the decorative
+          drop cap automatically.]
+        </p>
+        <p>
+          [Second paragraph.]
+        </p>
+        <p>
+          [Third paragraph, etc. — add as many &lt;p&gt; tags as you need.]
+        </p>
+      </div>
+
+      <!--
+        blockquote.lore-quote: an in-world quotation. <cite> inside it is
+        optional, for attribution. Delete the whole block if not needed.
+      -->
+      <blockquote class="lore-quote">
+        [Quoted line.]
+        <cite>&mdash; [Who said it, or where it's from]</cite>
+      </blockquote>
+
+      <!--
+        Picture, option A — a real image. Drop the file into assets/img/
+        and point src at it. alt text is required for accessibility.
+      -->
+      <!--
+      <figure class="lore-figure">
+        <img src="../../assets/img/[your-file].jpg" alt="[Describe the image]" />
+        <figcaption>[Caption text.]</figcaption>
+      </figure>
+      -->
+
+      <!--
+        Picture, option B — no artwork yet. Use this styled placeholder
+        instead of a broken <img>. Delete once you have a real image.
+      -->
+      <figure class="lore-figure image-placeholder">
+        [Illustration placeholder — describe what the image would show]
+      </figure>
+
+      <!--
+        .note-box: an aside / marginal note, e.g. a scribe's comment,
+        a content warning, or an out-of-universe note. Delete if not needed.
+      -->
+      <div class="note-box">
+        <span class="note-label">[Note Label, e.g. "Scribe's Note"]</span>
+        [Note text.]
+      </div>
+
+      <!-- hr.ornament: decorative section divider. Use freely between sections. -->
+      <hr class="ornament" />
+
+      <!--
+        .see-also: the wiki cross-linking block. Just normal relative
+        <a href> links to other pages — no special wiki syntax. This is
+        also how you should link to this entry from other pages that
+        mention it, inline or here.
+      -->
+      <div class="see-also">
+        <h3>Elsewhere in the Chronicle</h3>
+        <ul>
+          <li><a href="[relative/path/to/related-entry.html]">[Related Entry Title]</a></li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Chronicle &middot; handwritten lore, rendered on parchment</p>
+  </footer>
+
+  <script src="../../assets/js/transitions.js"></script>
+  <script src="../../assets/js/reveal.js"></script>
+</body>
+</html>
